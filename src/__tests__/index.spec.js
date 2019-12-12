@@ -5,6 +5,11 @@ const deabsDeep = require('../index');
 
 const rootDir = path.resolve(__dirname, '../..');
 
+test('replace absolute paths in a string', () => {
+	const result = deabsDeep(`${rootDir}/a/b.js`);
+	expect(result).toMatchInlineSnapshot(`"~/a/b.js"`);
+});
+
 test('recursively replace absolute paths in keys and values', () => {
 	const result = deabsDeep({
 		[`${rootDir}/a/b.js`]: `${rootDir}/c/d.js`,

@@ -26,11 +26,14 @@ module.exports = function(obj, options) {
 
 	const normalizeSeparators = s => s.replace(/\\/g, '/');
 
-	const deabs = s => (typeof s === 'string' ? normalizeSeparators(pureDeabs(s)) : s);
+	const deabs = s =>
+		typeof s === 'string' ? normalizeSeparators(pureDeabs(s)) : s;
 
 	if (Array.isArray(obj)) {
 		return obj.map(deabs);
 	}
 
-	return mapObj(obj, (key, value) => [deabs(key), deabs(value)]);
+	return typeof obj === 'string'
+		? deabs(obj)
+		: mapObj(obj, (key, value) => [deabs(key), deabs(value)]);
 };
